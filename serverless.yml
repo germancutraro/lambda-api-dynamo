@@ -1,0 +1,52 @@
+service: lambda-api-dynamo
+
+app: lambda-api-dynamo
+
+frameworkVersion: '2'
+
+useDotenv: true
+
+custom:
+  webpack:
+    excludeFiles: documentation/**
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  apiGateway:
+    shouldStartNameWithService: true
+  tracing:
+    lambda: true
+  region: us-east-1
+  profile: cutraroger
+  stage: ${opt:stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+        - s3:*
+        - ses:*
+      Resource: '*'
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  exclude:
+    - .git/**
+    - .serverless/**
+
+functions:
+  lambda-api:
+    name: lambda-api-dynamo-dev
+    handler: index.handler
+    timeout: 30
+    events:
+      - http:
+          path: 'api/v1/{proxy+}'
+          method: any
+          cors: true
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-dotenv-plugin

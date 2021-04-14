@@ -1,0 +1,21 @@
+{
+  "name": "lambda-api-dynamodb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "local": "sls offline start --stage dev --skipCacheInvalidation --httpPort 5000",
+    "deploy": "sudo AWS_SDK_LOAD_CONFIG=1 sls deploy --stage dev -v"
+  },
+  "dependencies": {
+    "lambda-api": "^0.10.7"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.886.0",
+    "dotenv": "^8.2.0",
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-offline": "^6.9.0",
+    "serverless-webpack": "^5.4.1",
+    "webpack": "^5.32.0"
+  }
+}
